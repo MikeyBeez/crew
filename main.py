@@ -7,15 +7,26 @@ from langchain.llms import Ollama
 ollama_openhermes = Ollama(model="openhermes")
 ollama_llama2 = Ollama(model="llama2")
 
-researcher = Agent(role='Researcher', goal='Research methods to sell this property <address>', backstory='You are an AI research assistant', tools=[search_tool], verbose=True, llm=ollama_openhermes, allow_delegation=False)
+researcher = Agent(role='Researcher', 
+                   goal='Research methods to create an agent that runs on ollama, uses openhermes, uses memgpt, use both typing or stt/tts, is always running and accessible, learns.  Write the python code.',
+                   backstory='You are an AI research assistant',
+                   tools=[search_tool],
+                   verbose=True,
+                   llm=ollama_openhermes,
+                   allow_delegation=False)
 
-writer = Agent(role='Writer', goal='Write compelling and engaging reasons to market this property', backstory='You are an AI master mind capable of marjeting any real estate', verbose=True, llm=ollama_llama2, allow_delegation=False)
+writer = Agent(role='Writer',
+               goal='Write complete documentation along with code',
+               backstory='You are an AI master mind capable of completing python projects',
+               verbose=True,
+               llm=ollama_llama2,
+               allow_delegation=False)
 
 
-task1 = Task(description='Investigate <address>', agent=researcher)
-task2 = Task(description='Investigate sure fire ways to market this property', agent=researcher)
+task1 = Task(description='Investigate methods and write code', agent=researcher)
+task2 = Task(description='write accompanting documentation', agent=researcher)
 
-task3 = Task(description='Write a list of tasks to market this property', agent=writer)
+task3 = Task(description='integrate code and documentation', agent=writer)
 
 
 crew = Crew(agents=[researcher, writer], tasks = [task1,task2,task3], verbose=2, process=Process.sequential)
